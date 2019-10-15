@@ -185,7 +185,7 @@ export class BucketsComponent implements OnInit{
                         this.allBuckets.forEach(item=>{
                             item.name =item.Name;
                             this.allBucketNameForCheck.push(item.Name);
-                            item.createdAt = Utils.formatDate(item.CreationDate);
+                            item.createdAt = Utils.formatDate(item.CreateTime);
                             this.bucketOption.push({
                                 label:item.name,
                                 value:item.name
@@ -374,7 +374,7 @@ export class BucketsComponent implements OnInit{
                     let str = res._body;
                     let x2js = new X2JS();
                     let jsonObj = x2js.xml_str2json(str);
-                    let alldir = jsonObj.ListObjectResponse.ListObjects ? jsonObj.ListObjectResponse.ListObjects :[] ;
+                    let alldir = jsonObj.ListBucketResult && jsonObj.ListBucketResult.Contents ? jsonObj.ListBucketResult.Contents : [];
                     if(alldir.length === 0){
                         this.http.get(`v1/{project_id}/plans?bucketname=${bucket.name}`).subscribe((res)=>{
                             let plans = res.json().plans ? res.json().plans : [];
